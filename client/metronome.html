@@ -9,7 +9,11 @@
 </template>
 
 <template name="home">
-<h1>Home</h1>
+	<p>Beats per measure: {{bpmeasure}}</p>
+	<p>Beats per minute: {{bpm}}</p>
+	<p>Current beat: {{currentBeat}}</p>
+
+	<div class="visual-metronome {{visualToggle}}"></div>
 </template>
 
 <template name="admin">

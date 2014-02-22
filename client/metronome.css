@@ -1,1 +1,12 @@
-/* CSS declarations go here */
+.visual-metronome {
+	width: 100%;
+	height: 500px;
+}
+
+.visual-metronome.ping {
+	background-color: red;
+}
+
+.visual-metronome.pong {
+	background-color: blue;
+}

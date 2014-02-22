@@ -1,12 +1,7 @@
-var SoundLib = {},
-currentBeat = 0;
+var SoundLib = {};
 
 
 Meteor.startup(function() {
-  Setting('bpm', 120);
-  Setting('bpmeasure', 4);
-  Setting('playpause', 'playing');
-
   SoundLib.high = new buzz.sound("/sounds/high", {
     formats: ["ogg", "mp3", "wav"]
   });
@@ -17,14 +12,16 @@ Meteor.startup(function() {
 
   SoundLib.high.load();
   SoundLib.low.load();
+
+  Session.set('currentBeat', 0);
 });
 
 var pitchPicker = function() {
-  currentBeat++;
-  if (currentBeat > Setting('bpmeasure')) {
-    currentBeat = 1;
+  Session.set('currentBeat', Session.get('currentBeat') + 1);
+  if (Session.get('currentBeat') > Setting('bpmeasure')) {
+    Session.set('currentBeat', 1);
   }
-  if (currentBeat === 1) {
+  if (Session.equals('currentBeat', 1)) {
     return "high";
   } else {
     return "low";
@@ -56,7 +53,7 @@ Template.layout.created = function() {
   // Watch for changes to play/pause to reset the current beat
   this.playpauseWatch = Deps.autorun(function() {
     if (Setting('playpause') ==='playing') {
-      currentBeat = 0;
+      Session.set('currentBeat', 0);
     }
   });
 };
@@ -111,3 +108,23 @@ Template.admin.events({
     });
   }
 });
+
+Template.home.bpmeasure = function() {
+  return Setting('bpmeasure');
+};
+
+Template.home.bpm = function() {
+  return Setting('bpm');
+};
+
+Template.home.currentBeat = function() {
+  return Session.get('currentBeat');
+};
+
+Template.home.visualToggle = function() {
+  if (Session.get('currentBeat') % 2 === 0) {
+    return 'pong';
+  } else {
+    return 'ping';
+  }
+}
