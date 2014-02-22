@@ -1,0 +1,35 @@
+<head>
+  <title>metronome</title>
+</head>
+
+<body></body>
+
+<template name="layout">
+{{yield}}
+</template>
+
+<template name="home">
+<h1>Home</h1>
+</template>
+
+<template name="admin">
+	<a href="/">&laquo; Go back</a>
+	<h1>Admin</h1>
+
+	<p>Beats per measure: 
+	<div class="btn-group">
+		<button class="btn bpmeasure-down">-</button>
+		<button class="btn bpmeasure-label">{{bpmeasure}}</button>
+		<button class="btn bpmeasure-up">+</button>
+	</div>
+</p>
+<p>Beats per minute: 
+<div class="btn-group">
+	<button class="btn bpm-down">-</button>
+	<button class="btn bpm-label">{{bpm}}</button>
+	<button class="btn bpm-up">+</button>
+</div>
+</p>
+
+<button class="btn btn-playpause"><span class="glyphicon glyphicon-{{playPauseStatus}}"></span></button>
+</template>
