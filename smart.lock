@@ -4,7 +4,6 @@
     "basePackages": {
       "iron-router": {},
       "bootstrap-3": {},
-      "buzz.js": {},
       "bootboxjs": {}
     },
     "packages": {
@@ -17,11 +16,6 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.0-1",
         "commit": "329dccb08bfc18c635676dea600ac9953162cda9"
-      },
-      "buzz.js": {
-        "git": "https://github.com/brentjanderson/meteor-buzz.git",
-        "tag": "v1.1.0.1",
-        "commit": "5c579c9833a6633a38fb05db928a09ac0a3bbc7e"
       },
       "bootboxjs": {
         "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",

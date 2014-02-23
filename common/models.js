@@ -1,20 +1,19 @@
 Settings = new Meteor.Collection("settings");
+Setting = function(){};
 
 Meteor.startup(function() {
-	if (Settings.find().count() === 0) {
-		Settings.insert({_id: "default"});
-		  Setting('bpm', 120);
-		  Setting('bpmeasure', 4);
-		  Setting('playpause', 'playing');
-	}
+	Setting = function(p, v) {
+		if (!v) {
+			var m = Settings.find({_id: 'default'}).fetch()[0];
+			if (m && m[p]) {
+				return m[p];
+			} else {
+				return;
+			}
+		} else {
+			var options = {};
+			options[p] = v;
+			return Settings.update('default', {$set: options});
+		}
+	};
 });
-
-Setting = function(p, v) {
-	if (!v) {
-		return Settings.find({_id: 'default'}).fetch()[0][p];
-	} else {
-		var options = {};
-		options[p] = v;
-		return Settings.update('default', {$set: options});
-	}
-};

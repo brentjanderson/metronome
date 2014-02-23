@@ -1,17 +1,18 @@
-var SoundLib = {};
+var SoundLib = {},
+timer;
 
 
 Meteor.startup(function() {
-  SoundLib.high = new buzz.sound("/sounds/high", {
-    formats: ["ogg", "mp3", "wav"]
-  });
+  // SoundLib.high = new buzz.sound("/sounds/high", {
+  //   formats: ["ogg", "mp3", "wav", "aac"]
+  // });
 
-  SoundLib.low = new buzz.sound("/sounds/low", {
-    formats: ["ogg", "mp3", "wav"]
-  });
+  // SoundLib.low = new buzz.sound("/sounds/low", {
+  //   formats: ["ogg", "mp3", "wav", "aac"]
+  // });
 
-  SoundLib.high.load();
-  SoundLib.low.load();
+  // SoundLib.high.load();
+  // SoundLib.low.load();
 
   Session.set('currentBeat', 0);
 });
@@ -33,14 +34,14 @@ var bpmToMs = function(bpm) {
 };
 
 Template.layout.created = function() {
-  var timer;
   var loop = function() {
-    if (Setting('playpause') === 'playing') {
-      if (pitchPicker() === 'high') {
-        SoundLib.high.play();
-      } else {
-        SoundLib.low.play();
-      }
+    console.log("Boop!");
+    if (pitchPicker() === 'high') {
+      // SoundLib.high.play();
+      document.getElementById('snd_high').play();
+    } else {
+      // SoundLib.low.play();
+      document.getElementById('snd_low').play();
     }
     timer = setTimeout(loop, bpmToMs(Setting('bpm')));
   };
@@ -52,8 +53,14 @@ Template.layout.created = function() {
 
   // Watch for changes to play/pause to reset the current beat
   this.playpauseWatch = Deps.autorun(function() {
-    if (Setting('playpause') ==='playing') {
+    console.log("Autorun");
+    if (Setting('playpause') ==='playing') { // We've started playing
       Session.set('currentBeat', 0);
+      clearTimeout(timer);
+      Meteor.setTimeout(function(){loop();},0);
+      // loop();
+    } else { // We've stopped playing
+      clearTimeout(timer);
     }
   });
 };

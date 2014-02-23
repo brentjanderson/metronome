@@ -6,6 +6,10 @@
 
 <template name="layout">
 {{yield}}
+{{#constant}}
+<audio src="/sounds/high.wav" id="snd_high" autoload="true" controls>
+<audio src="/sounds/low.wav" id="snd_low" autoload="true" controls>
+{{/constant}}
 </template>
 
 <template name="home">
